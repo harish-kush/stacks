@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int solve(int v1, int v2, string op) {
+        if(op == "+") return v1 + v2;
+        else if(op == "-") return v1 - v2;
+        else if(op == "*") return v1 * v2;
+        else return v1 / v2;
+    }
+
+    int evalRPN(vector<string>& tokens) {
+        stack<int> st;
+        int n = tokens.size();
+
+        for(int i = 0; i < n; i++) {
+            if(tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/") {
+                int x = stoi(tokens[i]);
+                st.push(x);
+            } else {
+                int v2 = st.top();
+                st.pop();
+                int v1 = st.top();
+                st.pop();
+
+                int result = solve(v1, v2, tokens[i]);
+                st.push(result);
+            }
+        }
+        return st.top(); 
+    }
+};
